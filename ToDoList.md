@@ -5,18 +5,20 @@
 - Research/ Contextual Background 
 - Creativity of Solution 
 - Demonstration of Feasibility 
-- Overall Presentation 
+- Overall Presentation - Sunday
 
 ## Reporting Tool
-- BOM
-- CAD
-- Schematic Diagram 
-- System/ Process Flowcharts 
-- Data Sheet 
+- BOM - Saturday
+- CAD - Saturday 
+- Schematic Diagram - Mikhail
+- System/ Process Flowcharts - Jason
+- Data Sheet - Saturday
 
 
 ## CBA Tasks 
 - Hand Writing Recognition - Caleb
 - Person tracking - Gabriel
-- Sentiment Analysis of Voice and Text -  
+- Hand writing to text - Caleb 
+- Speech to text - Jason 
+- Sentiment Analysis of Text -  Mikhail
 
