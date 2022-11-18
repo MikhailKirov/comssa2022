@@ -11,12 +11,12 @@
 - BOM
 - CAD
 - Schematic Diagram 
-- System Flowcharts 
+- System/ Process Flowcharts 
 - Data Sheet 
 
 
 ## CBA Tasks 
-- Hand Writing Recognition 
-- Person tracking 
-- NLP which includes hand writing and voice 
+- Hand Writing Recognition - Caleb
+- Person tracking - Gabriel
+- Sentiment Analysis of Voice and Text -  
 
