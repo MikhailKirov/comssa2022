@@ -80,9 +80,11 @@ try:
                 #text_file = open(r'output.txt', 'w')
                 #text_file.write(json.loads(rec.Result())['text'])
                 #text_file.close()
-                print("The text file has now been created")
-                json_object = json.loads(rec.Result())
-                print(json.loads(rec.Result())['text'])
+                #print("The text file has now been created")
+                #json_object = json.loads(rec.Result())
+                phrase = rec.Result()
+
+                print(json.loads(phrase)['text'])
             else:
                 #print(json.loads(rec.PartialResult())['partial'])
                 pass
