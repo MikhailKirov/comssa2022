@@ -7,12 +7,20 @@
 # Python program to translate
 # speech to text and text to speech
 
-
 import speech_recognition as sr
 import pyttsx3
+import time 
+
+m4a_file = "Hey.m4a"
+wav_filename = r"HeyLongTimeNoSee.wav"
+from pydub import AudioSegment
+track
 
 # Initialize the recognizer
 r = sr.Recognizer()
+
+# Initialise speech time 
+time_end  = time.time() + 30
 
 # Function to convert text to
 # speech
@@ -27,8 +35,11 @@ def SpeakText(command):
 # Loop infinitely for user to
 # speak
 
-while(1):
+print("Start of Loop")
+
+while time.time() < time_end:
 	
+	print("Restart Loop")
 	# Exception handling to handle
 	# exceptions at the runtime
 	try:
