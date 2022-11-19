@@ -1,0 +1,19 @@
+| Component                     | Purpose                                                              | Interface | Supplier | Cost    |
+|-------------------------------|----------------------------------------------------------------------|-----------|----------|---------|
+| Coral Compute Module          | Central Computing Platform with AI acceleration                      | N/A       |          | $326.79 |
+| CO2 Gas/Temp /Humidity Sensor | Collects information to  calculate respiration rate                  | I2C       |          | $18.47  |
+| O2 Gas Sensor                 | Collects information to  calculate respiration rate                  | I2C       |          | $109.5  |
+| 1080p Camera with IR Sensor   | Captures video feed, used for data collection and  various analytics | USB       |          | $91.83  |
+| Thermographic Camera          | Captures thermal information, used for data collection               | SPI       |          | $100.10 |
+| Touch Display/Pen             | Human-Machine Interface                                              | HDMI, USB |          |         |
+| Raspberry Pi                  |                                                                      |           |          | $123.00 |
+
+
+References:
+O2 Sensor:          https://www.pi-shop.ch/grove-sauerstoff-sensor-o2
+CO2 Gas:            https://campaign.aliexpress.com/wow/gcp/tesla-pc-new/index?UTABTest=aliabtest344316_486351&_randl_currency=AUD&_randl_shipto=AU&src=google&aff_fcid=1c8d3c7468b246c7bf885b9f82228ece-1668763856459-00949-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=1c8d3c7468b246c7bf885b9f82228ece-1668763856459-00949-UneMJZVf&terminal_id=47922089ae2d45bdbba4925fbc8f09ba&wh_weex=true&wx_navbar_hidden=true&wx_navbar_transparent=true&ignoreNavigationBar=true&wx_statusbar_hidden=true&bt_src=ppc_direct_lp&scenario=pcBridgePPC&productId=1005003974569988&OLP=1084300508_f_group2&o_s_id=1084300508
+Raspi:              hhttps://core-electronics.com.au/raspberry-pi-4-model-b-8gb.html
+Coral Compute:      https://www.aliexpress.com/item/10000303445990.html?pdp_npi=2%40dis%21AUD%21AU%20%24326.79%21AU%20%24326.79%21%21%21%21%21%402101d1b316687635260955318e8497%2120000000166678704%21btf&_t=pvid:9359b9c1-49a6-4005-af82-b8f7254c065e&afTraceInfo=10000303445990__pc__pcBridgePPC__xxxxxx__1668763526&spm=a2g0o.ppclist.product.mainProduct
+Thermal Camera:     https://raspberry.piaustralia.com.au/products/mlx90640-thermal-camera-breakout
+Normal Camera:      https://www.amazon.com.au/Arducam-Computer-Automatic-Switching-All-Day/dp/B0829HZ3Q7
+Touch Display/pen:  https://www.dhgate.com/product/inch-full-view-lcd-ips-press-sn-1024x600/759485311.html?f=bm%7CGMC%7C%7Bifdyn:dyn%7D%7Bifpla:pla%7D%7Bifdbm:DBM%7D%7C%7Bcampaignid%7D%7C%7Badgroupid%7D%7C759485311%7C%7Btargetid%7D%7C104008%7CUS%7Cmadai%7C%7Bdevice%7D%7C2%7C&utm_source=%7Bifdyn:dyn%7D%7Bifpla:pla%7D%7Bifdbm:DBM%7D&utm_medium=GMC&utm_campaign=madai&utm_term=759485311
