@@ -9,21 +9,25 @@ servo = 12
 servo2 = 13
 
 face_cascade= cv2.CascadeClassifier('data/haarcascade_frontalface_default.xml')
+body_cascade = cv2.CascadeClassifier('data/haarcascade_smile.xml')
 cap=cv2.VideoCapture(0)
-width = 640
-height = 480
+width = 480
+height = 640
 xpos = 1000
 ypos = 1000
 #fourcc= cv2.VideoWriter_fourcc(*'XVID')
 #out= cv2.VideoWriter('face detection4.avi',fourcc,20.0,(640,480))
 
-angle = 10
+angle = 15
 x_mid = 100
 y_mid = 100
 pwm = pigpio.pi()
 pwm.set_mode(servo, pigpio.OUTPUT)
 pwm.set_PWM_frequency( servo, 50 )
-
+font = cv2.FONT_HERSHEY_SIMPLEX
+org = (50,100)
+fontScale = 1
+thickness = 2
 int_milliseconds = int(time() * 1000)
 pwm.set_servo_pulsewidth( servo, xpos ) ;
 pwm.set_servo_pulsewidth( servo2, ypos ) ;
@@ -46,24 +50,30 @@ while cap.isOpened():
     #print(frame.shape)
     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     faces= face_cascade.detectMultiScale(gray,1.1,6)  #detect the face
+   # bodies= body_cascade.detectMultiScale(gray,1.1,6)  #detect the face
+    faces_num = 0
+    bodies_num = 0	
     for x,y,w,h in faces:
+		
+      
+        faces_num = faces_num + 1
         # Import class time from time module
 
  
-        milliseconds = int(time() * 1000)
+        milliseconds  = int(time() * 1000)
  
         
         #sending coordinates to Arduino
         string='X{0:d}Y{1:d}'.format((x+w//2),(y+h//2))
         
-        print(string)
+        
         x_mid = x+w//2
         y_mid = (y+h//2)
         #plot the center of the face
 
         cv2.circle(frame,(x+w//2,y+h//2),2,(0,255,0),2)
         #plot the roi
-        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),3)
+        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),1)
         if (x_mid < (width / 2 + 30)):
             xpos = xpos +angle
         if (x_mid > width / 2 - 30):
@@ -82,16 +92,23 @@ while cap.isOpened():
             ypos = 2500
         elif (ypos <= 500):
             ypos = 500
-        print(f"xpos: {xpos} ypos: {ypos}")
-        pwm.set_servo_pulsewidth( servo, ypos ) ;
-        pwm.set_servo_pulsewidth( servo2, xpos ) ;
+        #print(f"xpos: {xpos} ypos: {ypos}")
+        #print(milliseconds - int_milliseconds )
+        if(milliseconds - int_milliseconds  > 1):
+            int_milliseconds = milliseconds
+            
+            pwm.set_servo_pulsewidth( servo, ypos ) ;
+            pwm.set_servo_pulsewidth( servo2, xpos ) ;
 
     #plot the squared region in the center of the screen
-    cv2.rectangle(frame,(640//2-30,480//2-30),
-                 (640//2+30,480//2+30),
-                  (255,255,255),3)
+            
+    fa = str(faces_num) + " people"
+    frame = cv2.putText(frame,fa,org,font,fontScale,(255,255,255),thickness,cv2.LINE_AA)
+    
+   
+    cv2.circle(frame,(width//2,height//2),7,(255,255,255),3)
     #out.write(frame)
-    cv2.imshow('img',frame)
+    #cv2.imshow('img',frame)
 
 
 
