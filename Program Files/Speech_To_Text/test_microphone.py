@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
 
+# Program Name:     Microphone Speech to Text Recognition 
+# Date Created:     18/11/2022
+# Purpose:          To transcibe live speech to text 
+# Notes:            This code is based off of open source code from online 
+#                   https://medium.com/analytics-vidhya/offline-speech-recognition-made-easy-with-vosk-c61f7b720215
+
+# Importing required files 
 import argparse
 import queue
 import sys
 import sounddevice as sd
+import json
 
 from vosk import Model, KaldiRecognizer
 
 q = queue.Queue()
 
+# Usage of text string which is the final compilation of text
 def int_or_str(text):
     """Helper function for argument parsing."""
     try:
         return int(text)
-    except ValueError:
+    except ValueError: 
         return text
 
 def callback(indata, frames, time, status):
@@ -67,9 +76,16 @@ try:
         while True:
             data = q.get()
             if rec.AcceptWaveform(data):
-                print(rec.Result())
+                print("This is the end of a phrase.")
+                #text_file = open(r'output.txt', 'w')
+                #text_file.write(json.loads(rec.Result())['text'])
+                #text_file.close()
+                print("The text file has now been created")
+                json_object = json.loads(rec.Result())
+                print(json.loads(rec.Result())['text'])
             else:
-                print(rec.PartialResult())
+                #print(json.loads(rec.PartialResult())['partial'])
+                pass
             if dump_fn is not None:
                 dump_fn.write(data)
 
