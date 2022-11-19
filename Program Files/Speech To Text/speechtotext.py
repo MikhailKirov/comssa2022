@@ -4,6 +4,10 @@
 # Notes:            This code is based off of open source code from
 #                   google collab https://cloud.google.com/speech-to-text/docs/samples/speech-transcribe-async#speech_transcribe_async-python
 
+import os 
+import sys
+
+
 from pydub import AudioSegment
 audio = AudioSegment.from_file('Hey.m4a')
 
