@@ -2,8 +2,8 @@
 import socket
 
 class Server:
-    HOST = '10.128.8.7'
-    PORT = 443    
+    HOST = '192.168.28.26'
+    PORT = 4431 
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind((self.HOST, self.PORT))    
@@ -18,3 +18,5 @@ class Server:
         self.rpi.send(YOUR_DATA.encode())
 
 s = Server()
+while(1):
+        pass
