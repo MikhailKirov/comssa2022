@@ -29,6 +29,7 @@ org = (50,100)
 fontScale = 1
 thickness = 2
 int_milliseconds = int(time() * 1000)
+int_milliseconds2 = int(time() * 1000)
 pwm.set_servo_pulsewidth( servo, xpos ) ;
 pwm.set_servo_pulsewidth( servo2, ypos ) ;
 print("CV_CAP_PROP_FRAME_WIDTH: '{}'".format(cap.get(cv2.CAP_PROP_FRAME_WIDTH)))
@@ -45,11 +46,14 @@ print("CAP_PROP_CONVERT_RGB : '{}'".format(cap.get(cv2.CAP_PROP_CONVERT_RGB)))
 while cap.isOpened():
 
     ret, frame= cap.read()
+    milliseconds  = int(time() * 1000)
     frame=cv2.flip(frame,1)  #mirror the image
     frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
     #print(frame.shape)
     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-    faces= face_cascade.detectMultiScale(gray,1.1,6)  #detect the face
+    if(milliseconds - int_milliseconds2  > 100):
+        int_milliseconds2 = milliseconds
+        faces= face_cascade.detectMultiScale(gray,1.1,6)  #detect the face
    # bodies= body_cascade.detectMultiScale(gray,1.1,6)  #detect the face
     faces_num = 0
     bodies_num = 0	
@@ -60,7 +64,7 @@ while cap.isOpened():
         # Import class time from time module
 
  
-        milliseconds  = int(time() * 1000)
+        
  
         
         #sending coordinates to Arduino
@@ -108,7 +112,7 @@ while cap.isOpened():
    
     cv2.circle(frame,(width//2,height//2),7,(255,255,255),3)
     #out.write(frame)
-    #cv2.imshow('img',frame)
+    cv2.imshow('img',frame)
 
 
 
