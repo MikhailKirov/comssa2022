@@ -18,7 +18,7 @@ ypos = 1000
 #fourcc= cv2.VideoWriter_fourcc(*'XVID')
 #out= cv2.VideoWriter('face detection4.avi',fourcc,20.0,(640,480))
 
-angle = 15
+angle = 10
 x_mid = 100
 y_mid = 100
 pwm = pigpio.pi()
@@ -43,6 +43,10 @@ print("CAP_PROP_SATURATION : '{}'".format(cap.get(cv2.CAP_PROP_SATURATION)))
 print("CAP_PROP_HUE : '{}'".format(cap.get(cv2.CAP_PROP_HUE)))
 print("CAP_PROP_GAIN  : '{}'".format(cap.get(cv2.CAP_PROP_GAIN)))
 print("CAP_PROP_CONVERT_RGB : '{}'".format(cap.get(cv2.CAP_PROP_CONVERT_RGB)))
+xa = [0,0,0,0,0,0,0,0,0]
+ya = [0,0,0,0,0,0,0,0,0]
+wa = [0,0,0,0,0,0,0,0,0]
+ha = [0,0,0,0,0,0,0,0,0]
 while cap.isOpened():
 
     ret, frame= cap.read()
@@ -57,9 +61,14 @@ while cap.isOpened():
    # bodies= body_cascade.detectMultiScale(gray,1.1,6)  #detect the face
     faces_num = 0
     bodies_num = 0	
+    faceflag = 0
     for x,y,w,h in faces:
 		
-      
+        if(faces_num < len(xa)):
+            xa[faces_num] = x
+            ya[faces_num] = y
+            wa[faces_num] = w
+            ha[faces_num] = h
         faces_num = faces_num + 1
         # Import class time from time module
 
@@ -73,11 +82,33 @@ while cap.isOpened():
         
         x_mid = x+w//2
         y_mid = (y+h//2)
+        faceflag = 1
         #plot the center of the face
 
-        cv2.circle(frame,(x+w//2,y+h//2),2,(0,255,0),2)
+
+        
+    lar = 0
+    ind = 0
+    for i in range(faces_num):
+        if(faces_num < len(xa)):
+            area = wa[i]*ha[i]
+            if(area > lar):
+                lar = area 
+                ind = i
+                cv2.circle(frame,(xa[i]+wa[i]//2,ya[i]+ha[i]//2),2,(0,255,0),2)
+                #plot the roi
+                cv2.rectangle(frame,(xa[i],ya[i]),(xa[i]+wa[i],ya[i]+ha[i]),(0,0,255),1)
+    
+    #print(f"x {xa}, y {ya}, h {ha}, w {wa}")
+    #plot the squared region in the center of the screen
+            
+    fa = str(faces_num) + " people"
+    frame = cv2.putText(frame,fa,org,font,fontScale,(255,255,255),thickness,cv2.LINE_AA)
+    
+    if( faceflag ):
+        cv2.circle(frame,(xa[ind]+wa[ind]//2,ya[ind]+ha[ind]//2),2,(0,255,0),2)
         #plot the roi
-        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),1)
+        cv2.rectangle(frame,(xa[ind],ya[ind]),(xa[ind]+wa[ind],ya[ind]+ha[ind]),(0,255,255),1)
         if (x_mid < (width / 2 + 30)):
             xpos = xpos +angle
         if (x_mid > width / 2 - 30):
@@ -98,18 +129,14 @@ while cap.isOpened():
             ypos = 500
         #print(f"xpos: {xpos} ypos: {ypos}")
         #print(milliseconds - int_milliseconds )
-        if(milliseconds - int_milliseconds  > 1):
-            int_milliseconds = milliseconds
-            
-            pwm.set_servo_pulsewidth( servo, ypos ) ;
-            pwm.set_servo_pulsewidth( servo2, xpos ) ;
-
-    #plot the squared region in the center of the screen
-            
-    fa = str(faces_num) + " people"
-    frame = cv2.putText(frame,fa,org,font,fontScale,(255,255,255),thickness,cv2.LINE_AA)
-    
-   
+        faceflag = 0
+        pass
+    if(milliseconds - int_milliseconds  > 1):
+        int_milliseconds = milliseconds
+        
+        pwm.set_servo_pulsewidth( servo, ypos ) ;
+        pwm.set_servo_pulsewidth( servo2, xpos ) ;
+      
     cv2.circle(frame,(width//2,height//2),7,(255,255,255),3)
     #out.write(frame)
     cv2.imshow('img',frame)
@@ -127,3 +154,7 @@ while cap.isOpened():
         break
 cap.release()
 cv2.destroyAllWindows()
+pwm.set_PWM_dutycycle( servo, 0 )
+pwm.set_PWM_frequency( servo, 0 )
+pwm.set_PWM_dutycycle( servo2, 0 )
+pwm.set_PWM_frequency( servo2, 0 )

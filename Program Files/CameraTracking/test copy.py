@@ -144,6 +144,31 @@ while cap.isOpened():
         cv2.circle(frame,(xa[ind]+wa[ind]//2,ya[ind]+ha[ind]//2),2,(0,255,0),2)
         #plot the roi
         cv2.rectangle(frame,(xa[ind],ya[ind]),(xa[ind]+wa[ind],ya[ind]+ha[ind]),(0,255,255),1)
+        if (x_mid < (width / 2 + 30)):
+            xpos = xpos +angle
+        if (x_mid > width / 2 - 30):
+            xpos = xpos - angle
+        if (y_mid > height / 2 + 30):
+            ypos = ypos-angle
+        if (y_mid < height / 2 - 30):
+            ypos =ypos+ angle
+        #f the servo degree is outside its range
+        
+        if (xpos >= 2500):
+            xpos = 2500
+        elif (xpos <= 500):
+            xpos = 500
+        if (ypos >= 2500):
+            ypos = 2500
+        elif (ypos <= 500):
+            ypos = 500
+        #print(f"xpos: {xpos} ypos: {ypos}")
+        #print(milliseconds - int_milliseconds )
+        if(milliseconds - int_milliseconds  > 1):
+            int_milliseconds = milliseconds
+            
+            pwm.set_servo_pulsewidth( servo, ypos ) ;
+            pwm.set_servo_pulsewidth( servo2, xpos ) ;
         faceflag = 0
         pass
     #out.write(frame)
